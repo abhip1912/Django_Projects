@@ -1,0 +1,63 @@
+{% extends 'calc/base.html' %}{% block content %}
+<br><br><br>
+<center>
+    <script>
+        var n1 = 0,
+            n2 = 0;
+        $('#num1, #num2').keyup(function() {
+            if ($('#num1').val()) {
+                n1 = $('#num1').val();
+            }
+            if ($('#num2').val()) {
+                n2 = $('#num2').val();
+            }
+            var da = {
+                'n1': n1,
+                'n2': n2,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: 'about/',
+                data: da,
+                success: function(json) {
+                    console.log(json);
+                    $("#sum").text(json.sum);
+                    $("#sub").text(json.sub);
+                    $("#mul").text(json.mul);
+                    $("#div").text(json.div);
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });
+            console.log(n1, n2);
+        });
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm p-3 mb-2 bg-dark text-white">
+                <h2>Addition</h2>
+                <p>Yo bruh your sum is: <strong> <h3> <span id="sum"></span> </h3></strong></p>
+            </div>
+            <div class="col-sm p-3 mb-2 bg-dark text-white">
+                <h2>Subtraction</h2>
+                <p>Yo bruh your sub is: <strong> <h3> <span id="sub"></span> </h3></strong></p>
+            </div>
+            <div class="col-sm p-3 mb-2 bg-dark text-white">
+                <h2>Multiplication</h2>
+                <p>Yo bruh your mul is: <strong> <h3> <span id="mul"></span> </h3></strong></p>
+            </div>
+            <div class="col-sm p-3 mb-2 bg-dark text-white">
+                <h2>Division</h2>
+                <p>Yo bruh your div is: <strong> <h3> <span id="div"></span> </h3></strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <!--{{ sum }}-->
+    </div>
+</center>{% endblock content %}
